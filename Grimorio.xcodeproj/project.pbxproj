@@ -9,12 +9,21 @@
 /* Begin PBXBuildFile section */
 		5B641A2024E412C2009DFF24 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B641A1F24E412C2009DFF24 /* AppDelegate.swift */; };
 		5B641A2224E412C2009DFF24 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B641A2124E412C2009DFF24 /* SceneDelegate.swift */; };
-		5B641A2424E412C2009DFF24 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B641A2324E412C2009DFF24 /* ViewController.swift */; };
-		5B641A2724E412C2009DFF24 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B641A2524E412C2009DFF24 /* Main.storyboard */; };
 		5B641A2924E412C4009DFF24 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B641A2824E412C4009DFF24 /* Assets.xcassets */; };
 		5B641A2C24E412C4009DFF24 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B641A2A24E412C4009DFF24 /* LaunchScreen.storyboard */; };
 		5B641A3724E412C4009DFF24 /* GrimorioTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B641A3624E412C4009DFF24 /* GrimorioTests.swift */; };
 		5B641A4224E412C4009DFF24 /* GrimorioUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B641A4124E412C4009DFF24 /* GrimorioUITests.swift */; };
+		5B641A5024E415FA009DFF24 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B641A4F24E415FA009DFF24 /* TabBarController.swift */; };
+		5B641A5224E4166D009DFF24 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B641A5124E4166D009DFF24 /* TableViewController.swift */; };
+		5BCCBF3C24E4170A008EB2F0 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCCBF3B24E4170A008EB2F0 /* TableViewCell.swift */; };
+		5BCCBF3E24E4176C008EB2F0 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCCBF3D24E4176C008EB2F0 /* FavoritesViewController.swift */; };
+		5BCCBF4024E4178D008EB2F0 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCCBF3F24E4178D008EB2F0 /* CollectionViewCell.swift */; };
+		5BCCBF8D24E6C12D008EB2F0 /* SpellList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCCBF8C24E6C12D008EB2F0 /* SpellList.swift */; };
+		5BCCBF8F24E6C133008EB2F0 /* Spell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCCBF8E24E6C133008EB2F0 /* Spell.swift */; };
+		5BCCBF9224E6C899008EB2F0 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCCBF9124E6C899008EB2F0 /* Router.swift */; };
+		5BCCBF9424E6D0A8008EB2F0 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCCBF9324E6D0A8008EB2F0 /* ServiceError.swift */; };
+		5BCCBF9624E6D0CA008EB2F0 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCCBF9524E6D0CA008EB2F0 /* Service.swift */; };
+		5BCCBF9824EAB55D008EB2F0 /* SpellDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCCBF9724EAB55D008EB2F0 /* SpellDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,8 +47,6 @@
 		5B641A1C24E412C2009DFF24 /* Grimorio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grimorio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B641A1F24E412C2009DFF24 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5B641A2124E412C2009DFF24 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		5B641A2324E412C2009DFF24 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		5B641A2624E412C2009DFF24 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5B641A2824E412C4009DFF24 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5B641A2B24E412C4009DFF24 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5B641A2D24E412C4009DFF24 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,6 +56,17 @@
 		5B641A3D24E412C4009DFF24 /* GrimorioUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrimorioUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B641A4124E412C4009DFF24 /* GrimorioUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrimorioUITests.swift; sourceTree = "<group>"; };
 		5B641A4324E412C4009DFF24 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5B641A4F24E415FA009DFF24 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		5B641A5124E4166D009DFF24 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		5BCCBF3B24E4170A008EB2F0 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		5BCCBF3D24E4176C008EB2F0 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		5BCCBF3F24E4178D008EB2F0 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		5BCCBF8C24E6C12D008EB2F0 /* SpellList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellList.swift; sourceTree = "<group>"; };
+		5BCCBF8E24E6C133008EB2F0 /* Spell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spell.swift; sourceTree = "<group>"; };
+		5BCCBF9124E6C899008EB2F0 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		5BCCBF9324E6D0A8008EB2F0 /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
+		5BCCBF9524E6D0CA008EB2F0 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		5BCCBF9724EAB55D008EB2F0 /* SpellDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +117,12 @@
 		5B641A1E24E412C2009DFF24 /* Grimorio */ = {
 			isa = PBXGroup;
 			children = (
+				5BCCBF9024E6C886008EB2F0 /* Services */,
+				5BCCBF8924E6B9A4008EB2F0 /* Model */,
+				5BCCBF8724E571CE008EB2F0 /* Cells */,
+				5BCCBF4124E55CEB008EB2F0 /* Controller */,
 				5B641A1F24E412C2009DFF24 /* AppDelegate.swift */,
 				5B641A2124E412C2009DFF24 /* SceneDelegate.swift */,
-				5B641A2324E412C2009DFF24 /* ViewController.swift */,
-				5B641A2524E412C2009DFF24 /* Main.storyboard */,
 				5B641A2824E412C4009DFF24 /* Assets.xcassets */,
 				5B641A2A24E412C4009DFF24 /* LaunchScreen.storyboard */,
 				5B641A2D24E412C4009DFF24 /* Info.plist */,
@@ -128,6 +148,45 @@
 			path = GrimorioUITests;
 			sourceTree = "<group>";
 		};
+		5BCCBF4124E55CEB008EB2F0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5BCCBF3D24E4176C008EB2F0 /* FavoritesViewController.swift */,
+				5B641A5124E4166D009DFF24 /* TableViewController.swift */,
+				5B641A4F24E415FA009DFF24 /* TabBarController.swift */,
+				5BCCBF9724EAB55D008EB2F0 /* SpellDetailsViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		5BCCBF8724E571CE008EB2F0 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5BCCBF3F24E4178D008EB2F0 /* CollectionViewCell.swift */,
+				5BCCBF3B24E4170A008EB2F0 /* TableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		5BCCBF8924E6B9A4008EB2F0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5BCCBF8C24E6C12D008EB2F0 /* SpellList.swift */,
+				5BCCBF8E24E6C133008EB2F0 /* Spell.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5BCCBF9024E6C886008EB2F0 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				5BCCBF9124E6C899008EB2F0 /* Router.swift */,
+				5BCCBF9324E6D0A8008EB2F0 /* ServiceError.swift */,
+				5BCCBF9524E6D0CA008EB2F0 /* Service.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -138,6 +197,7 @@
 				5B641A1824E412C2009DFF24 /* Sources */,
 				5B641A1924E412C2009DFF24 /* Frameworks */,
 				5B641A1A24E412C2009DFF24 /* Resources */,
+				5B584E6024F002A200279E68 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -234,7 +294,6 @@
 			files = (
 				5B641A2C24E412C4009DFF24 /* LaunchScreen.storyboard in Resources */,
 				5B641A2924E412C4009DFF24 /* Assets.xcassets in Resources */,
-				5B641A2724E412C2009DFF24 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,14 +313,44 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5B584E6024F002A200279E68 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5B641A1824E412C2009DFF24 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B641A2424E412C2009DFF24 /* ViewController.swift in Sources */,
+				5B641A5024E415FA009DFF24 /* TabBarController.swift in Sources */,
+				5BCCBF4024E4178D008EB2F0 /* CollectionViewCell.swift in Sources */,
+				5BCCBF9824EAB55D008EB2F0 /* SpellDetailsViewController.swift in Sources */,
+				5BCCBF9224E6C899008EB2F0 /* Router.swift in Sources */,
 				5B641A2024E412C2009DFF24 /* AppDelegate.swift in Sources */,
+				5BCCBF3C24E4170A008EB2F0 /* TableViewCell.swift in Sources */,
+				5BCCBF9624E6D0CA008EB2F0 /* Service.swift in Sources */,
+				5BCCBF3E24E4176C008EB2F0 /* FavoritesViewController.swift in Sources */,
+				5B641A5224E4166D009DFF24 /* TableViewController.swift in Sources */,
+				5BCCBF9424E6D0A8008EB2F0 /* ServiceError.swift in Sources */,
+				5BCCBF8D24E6C12D008EB2F0 /* SpellList.swift in Sources */,
 				5B641A2224E412C2009DFF24 /* SceneDelegate.swift in Sources */,
+				5BCCBF8F24E6C133008EB2F0 /* Spell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,14 +386,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		5B641A2524E412C2009DFF24 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5B641A2624E412C2009DFF24 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		5B641A2A24E412C4009DFF24 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
