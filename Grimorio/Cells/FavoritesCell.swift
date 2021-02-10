@@ -1,6 +1,15 @@
+//
+//  FavoritesCell.swift
+//  Grimorio
+//
+//  Created by Rodrigo Silva Ribeiro on 09/02/21.
+//  Copyright © 2021 Rodrigo Silva Ribeiro. All rights reserved.
+//
+
+import Foundation
 import UIKit
 
-class TableViewCell: UITableViewCell {
+class FavoritesCell: UITableViewCell {
     
     var isHearted: Bool = false
     
@@ -29,14 +38,14 @@ class TableViewCell: UITableViewCell {
     lazy var favButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setImage(UIImage(systemName: "heart"), for: .normal)
-        btn.tintColor = .redSalsa
+        btn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        btn.tintColor = .lightGray
         self.addSubview(btn)
         return btn
     }()
 
     override func draw(_ rect: CGRect) {
-        //self.layer.backgroundColor = UIColor.mintCream.cgColor
+        self.layer.backgroundColor = UIColor.mintCream.cgColor
     }
     func set( spell : SpellList, favorited: Bool) {
         titleLabel.text = spell.name
@@ -45,7 +54,7 @@ class TableViewCell: UITableViewCell {
     
 
 }
-extension TableViewCell {
+extension FavoritesCell {
     private func setupUI() {
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),

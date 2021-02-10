@@ -11,9 +11,9 @@ struct SpellList: Codable {
     let index: String
     let name: String
     let url: String
-    init(_ name: String) {
+    init(_ name: String, index: String) {
         self.name = name
-        self.index = ""
+        self.index = index
         self.url = ""
     }
 }

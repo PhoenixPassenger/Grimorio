@@ -9,7 +9,7 @@
 import UIKit
 
 class SpellDetailsViewController: UIViewController {
-
+    let favoriteSpellPresenter = FavoriteSpellCDPresenter()
     var spell: SpellList
     init( _ spell: SpellList ) {
         self.spell = spell
@@ -24,6 +24,12 @@ class SpellDetailsViewController: UIViewController {
         didSet {
             self.descLbl.text = detailedSpell.desc[0]
             self.rangeLbl.text = detailedSpell.range
+            self.levelLbl.text = String(detailedSpell.level!)
+            if let material = detailedSpell.material {
+                self.materialLbl.text = material            }
+            if let higherLevel = detailedSpell.higherLevel {
+                self.higherlevelLbl.text = higherLevel[0]
+            }
 
         }
     }
@@ -40,27 +46,24 @@ class SpellDetailsViewController: UIViewController {
     var descTitle = UILabel()
     var descLbl = UILabel()
 
-    var castingTimeTitle = UILabel()
-    var castingTimeLbl = UILabel()
-
-    var durationTitle = UILabel()
-    var durationLbl = UILabel()
+    var materialTitle = UILabel()
+    var materialLbl = UILabel()
 
     var rangeTitle = UILabel()
     var rangeLbl = UILabel()
 
-    var componentsTitle = UILabel()
-    var componentsLbl = UILabel()
+    var higherlevelTitle = UILabel()
+    var higherlevelLbl = UILabel()
 
-    var classesTitle = UILabel()
-    var classesLbl = UILabel()
+    var levelTitle = UILabel()
+    var levelLbl = UILabel()
 
     let contentView: UIView = UIView()
 
     let scrollView: UIScrollView = {
         let scrollview = UIScrollView()
         scrollview.translatesAutoresizingMaskIntoConstraints = false
-        scrollview.backgroundColor = .systemBackground
+        scrollview.backgroundColor = .mintCream
         return scrollview
     }()
 
@@ -99,7 +102,7 @@ class SpellDetailsViewController: UIViewController {
                      guard let data = data else { return }
                      let spellDetailed = try? JSONDecoder().decode(Spell.self, from: data)
                      guard let spelldetails = spellDetailed else {
-                         return
+                         fatalError()
                      }
                      DispatchQueue.main.async {
                          self.detailedSpell = spelldetails
@@ -123,7 +126,7 @@ extension SpellDetailsViewController {
 
     func setupBody(label: UILabel) -> UILabel {
         label.font = UIFont.systemFont(ofSize: 17)
-        label.textColor = .systemYellow
+        label.textColor = .black
         label.numberOfLines = 16
         return label
     }
@@ -155,7 +158,10 @@ extension SpellDetailsViewController {
             } catch {
                 print(error)
             }
-
+            let detailedSpell = self.detailedSpell
+            let spellToFavorite = FavoriteSpell(name: detailedSpell.name, level: detailedSpell.level!, school: (detailedSpell.school?.name!)!, index: detailedSpell.index)
+            favoriteSpellPresenter.newSpell(spell: spellToFavorite)
+            print(favoriteSpellPresenter.fetchSpellss().count)
             defaults.set(true, forKey: self.detailedSpell.name)
         } else {
            self.heartButton.image = UIImage(systemName: "heart")
@@ -178,7 +184,6 @@ extension SpellDetailsViewController {
     private func setupLayout() {
         prepareHeartButton()
 
-        view.backgroundColor = .white
         self.view.addSubview(scrollView)
 
         scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
@@ -193,6 +198,18 @@ extension SpellDetailsViewController {
         rangeTitle = setupTitle(label: rangeTitle)
         rangeTitle.text = "Range : "
         rangeLbl = setupBody(label: rangeLbl)
+
+        higherlevelTitle = setupTitle(label: higherlevelTitle)
+        higherlevelTitle.text = "Higher Level : "
+        higherlevelLbl = setupBody(label: higherlevelLbl)
+
+        levelTitle = setupTitle(label: levelTitle)
+        levelTitle.text = "Level : "
+        levelLbl = setupBody(label: levelLbl)
+
+        materialTitle = setupTitle(label: materialTitle)
+        materialTitle.text = "Material : "
+        materialLbl = setupBody(label: materialLbl)
 
         view.addSubview(nameTitle)
         view.addSubview(descLbl)
@@ -219,6 +236,30 @@ extension SpellDetailsViewController {
         stackview.addArrangedSubview(rangeLbl)
         rangeLbl.leadingAnchor.constraint(equalTo: stackview.leadingAnchor).isActive = true
         rangeLbl.trailingAnchor.constraint(equalTo: stackview.trailingAnchor).isActive = true
+
+        stackview.addArrangedSubview(levelTitle)
+        levelTitle.leadingAnchor.constraint(equalTo: stackview.leadingAnchor).isActive = true
+        levelTitle.trailingAnchor.constraint(equalTo: stackview.trailingAnchor).isActive = true
+
+        stackview.addArrangedSubview(levelLbl)
+        levelLbl.leadingAnchor.constraint(equalTo: stackview.leadingAnchor).isActive = true
+        levelLbl.trailingAnchor.constraint(equalTo: stackview.trailingAnchor).isActive = true
+
+        stackview.addArrangedSubview(materialTitle)
+        materialTitle.leadingAnchor.constraint(equalTo: stackview.leadingAnchor).isActive = true
+        materialTitle.trailingAnchor.constraint(equalTo: stackview.trailingAnchor).isActive = true
+
+        stackview.addArrangedSubview(materialLbl)
+        materialLbl.leadingAnchor.constraint(equalTo: stackview.leadingAnchor).isActive = true
+        materialLbl.trailingAnchor.constraint(equalTo: stackview.trailingAnchor).isActive = true
+
+        stackview.addArrangedSubview(higherlevelTitle)
+        higherlevelTitle.leadingAnchor.constraint(equalTo: stackview.leadingAnchor).isActive = true
+        higherlevelTitle.trailingAnchor.constraint(equalTo: stackview.trailingAnchor).isActive = true
+
+        stackview.addArrangedSubview(higherlevelLbl)
+        higherlevelLbl.leadingAnchor.constraint(equalTo: stackview.leadingAnchor).isActive = true
+        higherlevelLbl.trailingAnchor.constraint(equalTo: stackview.trailingAnchor).isActive = true
 
         contentView.addSubview(stackview)
         stackview.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true

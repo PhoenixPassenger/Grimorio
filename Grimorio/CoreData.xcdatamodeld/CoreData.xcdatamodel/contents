@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20D64" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="FavoriteSpellCD" representedClassName="FavoriteSpellCD" syncable="YES" codeGenerationType="category">
+        <attribute name="index" optional="YES" attributeType="String"/>
+        <attribute name="level" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="school" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="FavoriteSpellCD" positionX="-63" positionY="-18" width="128" height="89"/>
+    </elements>
+</model>

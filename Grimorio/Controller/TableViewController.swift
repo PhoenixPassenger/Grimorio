@@ -6,9 +6,10 @@ class TableViewController: UIViewController, UISearchBarDelegate {
         setupUI()
         getSpells()
         setupSearchBar()
-        self.navigationItem.largeTitleDisplayMode = .never
+        //self.navigationItem.largeTitleDisplayMode = .never
         self.navigationController?.navigationBar.prefersLargeTitles = true
     }
+    let presenter = SpellItemPresenter()
     var filteredSpells: [SpellList] = []
     var list: [SpellList] = [] {
         didSet {
@@ -37,8 +38,8 @@ class TableViewController: UIViewController, UISearchBarDelegate {
         if textSearched == "" {
             filteredSpells = list
         } else {
-            filteredSpells = list.filter { ap in
-                return ap.name.lowercased().contains(textSearched.lowercased())
+            filteredSpells = list.filter { item in
+                return item.name.lowercased().contains(textSearched.lowercased())
             }
         }
         tableView.reloadData()
@@ -62,7 +63,7 @@ extension TableViewController {
             overrideUserInterfaceStyle = .light
         }
         self.view.addSubview(tableView)
-        tableView.rowHeight = 50
+        tableView.rowHeight = 80
 
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
@@ -74,32 +75,8 @@ extension TableViewController {
     }
 
     private func getSpells() {
-
-        ServiceLayer.request(router: .getAllSpells) { (result) in
-            switch result {
-            case .success(let data):
-                guard let data = data else { return }
-
-                if let dictionary: [String: Any] = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                    let innerDictionary = dictionary["results"] as? [[String: Any]],
-                   let spellsData = try? JSONSerialization.data(withJSONObject: innerDictionary, options: []) {
-                    do {
-                        let spells = try JSONDecoder().decode([SpellList].self, from: spellsData)
-                        spells.forEach {
-                            self.spellTitles.append($0)
-                        }
-                        DispatchQueue.main.sync {
-                            self.list = self.spellTitles
-                        }
-                    } catch {
-                        print(String(bytes: data, encoding: .utf8) ?? "nil")
-                        print(error)
-                    }
-                }
-
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
+        presenter.getSpells { response in
+            self.list = response
         }
     }
 
@@ -115,12 +92,18 @@ extension TableViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredSpells.count
     }
-
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = .white
+        return headerView
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 20
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellWrap = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as? TableViewCell
         guard let cell = cellWrap else { fatalError() }
-        cell.titleLabel.text = filteredSpells[indexPath.row].name
-        cell.accessoryType = .disclosureIndicator
+        cell.set(spell: filteredSpells[indexPath.row], favorited: false)
         return cell
     }
 
@@ -128,17 +111,6 @@ extension TableViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: false)
         let dest = SpellDetailsViewController(filteredSpells[indexPath.row])
         self.navigationController?.pushViewController(dest, animated: true)
-        //self.present(dest, animated: true, completion:{})
     }
 
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (_, _, _) in
-            self.filteredSpells.remove(at: indexPath.row)
-            self.tableView.reloadData()
-        }
-        deleteAction.backgroundColor = .red
-        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
-        configuration.performsFirstActionWithFullSwipe = false
-        return configuration
-    }
 }

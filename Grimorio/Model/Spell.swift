@@ -8,25 +8,61 @@
 
 import Foundation
 struct Spell: Codable {
-    let name: String
+    let index, name: String
     let desc: [String]
     let higherLevel: [String]?
     let range: String?
+    let components: [String]?
+    let material: String?
+    let ritual: Bool?
+    let duration: String?
+    let concentration: Bool?
+    let castingTime: String?
+    let level: Int?
+    let school: ApiReference?
+    let classes, subclasses: [ApiReference]?
 
-    private enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
+        case index, name, desc
         case higherLevel = "higher_level"
-        case desc = "desc"
-        case range = "range"
-        case name = "name"
+        case range, components, material, ritual, duration, concentration
+        case castingTime = "casting_time"
+        case level
+        case school, classes, subclasses
     }
-
+    
     init() {
+        self.index = ""
+        
         self.name = ""
+        
+        self.range = nil
+        self.level = nil
+        self.school = nil
+        
+        self.components = []
+        self.ritual = false
+        self.concentration = false
+        
+        self.castingTime = nil
+        self.duration = nil
+        
+        self.material = nil
+        
+        
         self.desc = []
         self.higherLevel = nil
-        self.range = nil
+        
+        self.classes = []
+        self.subclasses = []
     }
 }
+
+// MARK: - School
+struct ApiReference: Codable {
+    let index, name, url: String?
+}
+
 //    "range": "90 feet",
 //    "components": [
 //        "V",

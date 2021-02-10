@@ -1,6 +1,7 @@
 import UIKit
 
 class FavoritesViewController: UIViewController, UISearchBarDelegate {
+    let favoritesPresenter = FavoriteSpellCDPresenter()
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -15,10 +16,8 @@ class FavoritesViewController: UIViewController, UISearchBarDelegate {
         filteredSpells = list
         self.tableView.reloadData()
         }
-
     }
     var url: [String] = []
-    var spellTitles: [SpellList] = []
 
     lazy var searchBar: UISearchBar = UISearchBar()
 
@@ -42,8 +41,8 @@ class FavoritesViewController: UIViewController, UISearchBarDelegate {
         if textSearched == "" {
             filteredSpells = list
         } else {
-            filteredSpells = list.filter { ap in
-                return ap.name.lowercased().contains(textSearched.lowercased())
+            filteredSpells = list.filter { item in
+                return item.name.lowercased().contains(textSearched.lowercased())
             }
         }
         tableView.reloadData()
@@ -65,18 +64,10 @@ class FavoritesViewController: UIViewController, UISearchBarDelegate {
 extension FavoritesViewController {
     func getDownloadedSpell() {
         self.list = []
-        do {
-            let fileURL = try FileManager.default
-                .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            let spells = try FileManager.default.contentsOfDirectory(at: fileURL, includingPropertiesForKeys: [])
-            spells.forEach {
-                let spellTitle = String($0.lastPathComponent.split(separator: ".")[0])
-                let spellToNextScreen = SpellList(spellTitle)
-                self.list.append(spellToNextScreen)
-
-            }
-        } catch {
-            print(error)
+        var temp: [FavoriteSpellCD] = []
+        temp = favoritesPresenter.fetchSpellss()
+        temp.forEach{ fav in
+            self.list.append(SpellList(fav.name!, index: fav.index!))
         }
     }
 
@@ -139,6 +130,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
                 print(error)
             }
             UserDefaults.standard.set(false, forKey: self.filteredSpells[indexPath.row].name)
+            
              self.filteredSpells.remove(at: indexPath.row)
             self.tableView.reloadData()
         }
