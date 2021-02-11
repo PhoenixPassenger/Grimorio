@@ -49,7 +49,6 @@ struct Spell: Codable {
         
         self.material = nil
         
-        
         self.desc = []
         self.higherLevel = nil
         

@@ -6,7 +6,7 @@ class TableViewController: UIViewController, UISearchBarDelegate {
         setupUI()
         getSpells()
         setupSearchBar()
-        //self.navigationItem.largeTitleDisplayMode = .never
+        self.view.backgroundColor = .mintCream
         self.navigationController?.navigationBar.prefersLargeTitles = true
     }
     let presenter = SpellItemPresenter()
@@ -50,7 +50,7 @@ class TableViewController: UIViewController, UISearchBarDelegate {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
-        tableView.tableFooterView = UIView()
+        //tableView.tableFooterView = UIView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         return tableView
@@ -63,13 +63,11 @@ extension TableViewController {
             overrideUserInterfaceStyle = .light
         }
         self.view.addSubview(tableView)
-        tableView.rowHeight = 80
-
+        tableView.rowHeight = 66
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            tableView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            tableView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-            tableView.widthAnchor.constraint(equalTo: self.view.widthAnchor),
+            tableView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 16),
+            tableView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -16),
             tableView.heightAnchor.constraint(equalTo: self.view.heightAnchor)
         ])
     }
@@ -88,28 +86,35 @@ extension TableViewController {
 }
 
 extension TableViewController: UITableViewDelegate, UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredSpells.count
-    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
-        headerView.backgroundColor = .white
+        headerView.backgroundColor = UIColor.clear
         return headerView
     }
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
     }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return filteredSpells.count
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellWrap = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as? TableViewCell
         guard let cell = cellWrap else { fatalError() }
-        cell.set(spell: filteredSpells[indexPath.row], favorited: false)
+        cell.set(spell: filteredSpells[indexPath.section])
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        let dest = SpellDetailsViewController(filteredSpells[indexPath.row])
+        let dest = SpellDetailsViewController(filteredSpells[indexPath.section])
         self.navigationController?.pushViewController(dest, animated: true)
     }
 

@@ -13,18 +13,18 @@ class SpellCell: UITableViewCell {
     }
 
     override func layoutSubviews() {
+        super.layoutSubviews()
         setupUI()
-    }
+        }
 
     // MARK: - Properties
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .redSalsa
+        label.textColor = .raisenBlack
         label.font = UIFont.boldSystemFont(ofSize: 20)
         return label
     }()
-    
     
     lazy var valueText: UITextView = {
         let field = UITextView()
@@ -46,6 +46,7 @@ class SpellCell: UITableViewCell {
         stack.axis = .vertical
         stack.alignment = .fill
         stack.spacing = 5
+        stack.backgroundColor = .redSalsa
         self.addSubview(stack)
         return stack
     }()
@@ -56,16 +57,14 @@ class SpellCell: UITableViewCell {
         self.layer.backgroundColor = UIColor.redSalsa.cgColor
         self.layer.borderColor = UIColor.redSalsa.cgColor
     }
-    func set( spell : SpellList) {
+    func set(spell: FavoriteSpellCD) {
         titleLabel.text = spell.name
-        valueText.text = spell.name
+        valueText.text = "aaaaaaa eu to maluco"
     }
 
 }
 extension SpellCell {
     private func setupUI() {
-        self.contentView.addSubview(titleLabel)
-
         NSLayoutConstraint.activate([
             stack.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             stack.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -88,4 +87,3 @@ extension SpellCell {
 
     }
 }
-

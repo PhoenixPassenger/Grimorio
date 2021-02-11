@@ -39,7 +39,7 @@ class SpellItemPresenter {
             }
         }
     }
-    func getSpell(spell : SpellList, finished:@escaping (Spell) -> Void) {
+    func getSpell(spell: SpellList, finished:@escaping (Spell) -> Void) {
         ServiceLayer.request(router: .getSpell(spellIndex: spell.index)) { (result) in
             switch result {
             case .success(let data):
@@ -56,7 +56,7 @@ class SpellItemPresenter {
             }
         }
     }
-    func saveFromTableView(spell : SpellList) {
+    func saveFromTableView(spell: SpellList) {
         var detailedSpell = Spell().self
         getSpell(spell: spell, finished: { response in
             detailedSpell = response

@@ -9,10 +9,13 @@
 import UIKit
 
 class SpellDetailsViewController: UIViewController {
+    let spellItemPresenter  = SpellItemPresenter()
     let favoriteSpellPresenter = FavoriteSpellCDPresenter()
+    var spellCD: FavoriteSpellCD?
     var spell: SpellList
     init( _ spell: SpellList ) {
         self.spell = spell
+        self.spellCD = favoriteSpellPresenter.getSpellByName(spell.name)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -66,14 +69,24 @@ class SpellDetailsViewController: UIViewController {
         scrollview.backgroundColor = .mintCream
         return scrollview
     }()
-
+    
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.separatorStyle = .none
+        return tableView
+    }()
+    
     override func viewDidLoad() {
         getSpells()
         super.viewDidLoad()
         nameTitle.text = spell.name
         self.title = nameTitle.text
         setupLayout()
-
+        self.view.backgroundColor = .mintCream
         self.navigationItem.largeTitleDisplayMode = .always
     }
 
@@ -96,22 +109,9 @@ class SpellDetailsViewController: UIViewController {
                 print(error.localizedDescription)
             }
         } else {
-            ServiceLayer.request(router: .getSpell(spellIndex: spell.index)) { (result) in
-                switch result {
-                case .success(let data):
-                     guard let data = data else { return }
-                     let spellDetailed = try? JSONDecoder().decode(Spell.self, from: data)
-                     guard let spelldetails = spellDetailed else {
-                         fatalError()
-                     }
-                     DispatchQueue.main.async {
-                         self.detailedSpell = spelldetails
-                     }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-
+            spellItemPresenter.getSpell(spell: spell, finished: { response in
+                self.detailedSpell = response
+            })
         }
        }
 
@@ -144,37 +144,17 @@ extension SpellDetailsViewController {
     @objc func heart(sender: UIBarButtonItem) {
 
         self.isHearted = !self.isHearted
-
+        let detailedSpell = self.detailedSpell
         if self.isHearted {
             self.heartButton.image = UIImage(systemName: "heart.fill")
-
-            do {
-                let fileURL = try FileManager.default
-                    .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-                    .appendingPathComponent("\(self.detailedSpell.name).json")
-
-                try JSONEncoder().encode(self.detailedSpell)
-                .write(to: fileURL)
-            } catch {
-                print(error)
-            }
-            let detailedSpell = self.detailedSpell
+            favoriteSpellPresenter.saveOnFM(detailedSpell)
             let spellToFavorite = FavoriteSpell(name: detailedSpell.name, level: detailedSpell.level!, school: (detailedSpell.school?.name!)!, index: detailedSpell.index)
-            favoriteSpellPresenter.newSpell(spell: spellToFavorite)
-            print(favoriteSpellPresenter.fetchSpellss().count)
+            self.spellCD = favoriteSpellPresenter.newSpell(spell: spellToFavorite)
             defaults.set(true, forKey: self.detailedSpell.name)
         } else {
            self.heartButton.image = UIImage(systemName: "heart")
-           do {
-                let fileURL = try FileManager.default
-                    .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-                    .appendingPathComponent("\(self.detailedSpell.name).json")
-
-                try FileManager.default.removeItem(at: fileURL)
-            } catch {
-                print(error)
-            }
-
+            favoriteSpellPresenter.deleteFromFM(detailedSpell.name)
+            self.favoriteSpellPresenter.deleteSkill(self.spellCD!)
             defaults.set(false, forKey: self.detailedSpell.name)
         }
         self.navigationItem.setRightBarButton(self.heartButton, animated: true)
@@ -280,4 +260,57 @@ extension SpellDetailsViewController {
 
        }
 
+}
+
+extension SpellDetailsViewController: UITableViewDelegate, UITableViewDataSource {
+    private func setupUI() {
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .light
+        }
+        self.view.addSubview(tableView)
+        tableView.rowHeight = 66
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            tableView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 16),
+            tableView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -16),
+            tableView.heightAnchor.constraint(equalTo: self.view.heightAnchor)
+        ])
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.isTranslucent = true
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = UIColor.clear
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return filteredSpells.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellWrap = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as? TableViewCell
+        guard let cell = cellWrap else { fatalError() }
+        cell.set(spell: filteredSpells[indexPath.section])
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        let dest = SpellDetailsViewController(filteredSpells[indexPath.section])
+        self.navigationController?.pushViewController(dest, animated: true)
+    }
 }

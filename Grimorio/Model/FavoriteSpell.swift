@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class FavoriteSpell : Codable {
+class FavoriteSpell: Codable {
     let index: String
     let name: String
     let level: Int
