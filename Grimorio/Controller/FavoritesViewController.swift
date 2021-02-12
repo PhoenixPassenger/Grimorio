@@ -118,7 +118,10 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         let cellWrap = tableView.dequeueReusableCell(withIdentifier: "FavoritesCell") as? FavoritesCell
         guard let cell = cellWrap else { fatalError() }
         cell.set(spell: filteredSpells[indexPath.section])
-        cell.accessoryType = .disclosureIndicator
+        let imageView = UIImageView(frame: CGRect(x: 20, y: 20, width: 31, height: 27))
+        imageView.image = UIImage(systemName: "heart.fill")
+        imageView.tintColor = .redSalsa
+        cell.accessoryView = imageView
         return cell
     }
 

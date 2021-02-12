@@ -52,6 +52,7 @@ class TableViewController: UIViewController, UISearchBarDelegate {
         tableView.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
+        tableView.tintColor = .redSalsa
         return tableView
     }()
 }
@@ -72,8 +73,10 @@ extension TableViewController {
     }
 
     private func getSpells() {
+        self.tableView.setLoading(true)
         presenter.getSpells { response in
             self.list = response
+            self.tableView.setLoading(false)
         }
     }
 

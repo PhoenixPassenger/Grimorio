@@ -13,7 +13,7 @@ class SpellDetailsViewController: UIViewController {
     let favoriteSpellPresenter = FavoriteSpellCDPresenter()
     var spellCD: FavoriteSpellCD?
     var spell: SpellList
-    var infoArray : [(String, String)] = []
+    var infoArray: [(String, String)] = []
     init( _ spell: SpellList ) {
         self.spell = spell
         self.spellCD = favoriteSpellPresenter.getSpellByName(spell.name)
@@ -64,11 +64,11 @@ class SpellDetailsViewController: UIViewController {
                 self.infoArray.append(("Duration", duration))
             }
             
-            let desc: String = detailedSpell.desc.joined(separator: "/n")
+            let desc: String = detailedSpell.desc.joined(separator: "\n")
             self.infoArray.append(("Description", desc))
             
             if let atHigherLevel = detailedSpell.higherLevel {
-                let fullAtHigherLevel: String = atHigherLevel.joined(separator: "/n")
+                let fullAtHigherLevel: String = atHigherLevel.joined(separator: "\n")
                 self.infoArray.append(("At higher levels", fullAtHigherLevel))
             }
             tableView.reloadData()
@@ -90,6 +90,7 @@ class SpellDetailsViewController: UIViewController {
         tableView.register(SpellCell.self, forCellReuseIdentifier: "SpellCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
+        tableView.tintColor = .redSalsa
         return tableView
     }()
     
@@ -103,6 +104,7 @@ class SpellDetailsViewController: UIViewController {
     }
 
     private func getSpells() {
+        self.tableView.setLoading(true)
         if self.defaults.bool(forKey: self.spell.name) {
             do {
                 let fileURL = try FileManager.default
@@ -115,6 +117,7 @@ class SpellDetailsViewController: UIViewController {
                     return
                 }
                 DispatchQueue.main.async {
+                    self.tableView.setLoading(false)
                     self.detailedSpell = spelldetails
                 }
             } catch {
@@ -122,6 +125,7 @@ class SpellDetailsViewController: UIViewController {
             }
         } else {
             spellItemPresenter.getSpell(spell: spell, finished: { response in
+                self.tableView.setLoading(false)
                 self.detailedSpell = response
             })
         }

@@ -80,7 +80,7 @@ extension SpellCell {
 
         if isMultiline {
             valueText.heightAnchor.constraint(equalToConstant: 180).isActive = true
-            valueText.textContainer.maximumNumberOfLines = 12
+            valueText.textContainer.maximumNumberOfLines = 0
         } else {
             valueText.heightAnchor.constraint(equalToConstant: 30).isActive = true
             valueText.textContainer.maximumNumberOfLines = 1
