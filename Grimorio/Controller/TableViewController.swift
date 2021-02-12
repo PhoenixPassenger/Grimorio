@@ -1,6 +1,6 @@
 import UIKit
 
-class TableViewController: UIViewController, UISearchBarDelegate {
+class SpellsTableViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -8,6 +8,8 @@ class TableViewController: UIViewController, UISearchBarDelegate {
         setupSearchBar()
         self.view.backgroundColor = .mintCream
         self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.hideKeyboardWhenTappedAround()
+
     }
     let presenter = SpellItemPresenter()
     var filteredSpells: [SpellList] = []
@@ -53,11 +55,12 @@ class TableViewController: UIViewController, UISearchBarDelegate {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         tableView.tintColor = .redSalsa
+        tableView.keyboardDismissMode = .onDrag
         return tableView
     }()
 }
 
-extension TableViewController {
+extension SpellsTableViewController {
     private func setupUI() {
         if #available(iOS 13.0, *) {
             overrideUserInterfaceStyle = .light
@@ -87,7 +90,7 @@ extension TableViewController {
     }
 }
 
-extension TableViewController: UITableViewDelegate, UITableViewDataSource {
+extension SpellsTableViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
@@ -117,6 +120,7 @@ extension TableViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         let dest = SpellDetailsViewController(filteredSpells[indexPath.section])
+        searchBar.endEditing(true)
         self.navigationController?.pushViewController(dest, animated: true)
     }
 

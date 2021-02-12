@@ -24,12 +24,6 @@ class SpellDetailsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-//    lazy var age: ProfileComponent = {
-//        let view = ProfileComponent(titleText: LocalizedStrings.age, value: "")
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        return view
-//    }()
-//    
     var detailedSpell = Spell().self {
         didSet {
             if let lvl = detailedSpell.level {

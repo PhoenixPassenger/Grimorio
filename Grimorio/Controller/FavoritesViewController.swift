@@ -8,6 +8,7 @@ class FavoritesViewController: UIViewController, UISearchBarDelegate {
         setupUI()
         getDownloadedSpell()
         setupSearchBar()
+        self.hideKeyboardWhenTappedAround()
         self.navigationController?.navigationBar.prefersLargeTitles = true
     }
     
@@ -57,6 +58,7 @@ class FavoritesViewController: UIViewController, UISearchBarDelegate {
         tableView.tableFooterView = UIView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
+        tableView.keyboardDismissMode = .onDrag
         return tableView
     }()
 
@@ -129,6 +131,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: false)
         let spellToGo = SpellList(filteredSpells[indexPath.section].name!, index: filteredSpells[indexPath.section].index!)
         let dest = SpellDetailsViewController(spellToGo)
+        searchBar.endEditing(true)
         self.navigationController?.pushViewController(dest, animated: true)
     }
 

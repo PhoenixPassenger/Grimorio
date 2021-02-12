@@ -9,13 +9,14 @@
 /* Begin PBXBuildFile section */
 		5B4C27DF25D6A15300C492D7 /* UIView+Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4C27DE25D6A15300C492D7 /* UIView+Loading.swift */; };
 		5B4C27E425D6A18000C492D7 /* LoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4C27E325D6A18000C492D7 /* LoadingProtocol.swift */; };
+		5B4C27FA25D7132700C492D7 /* KeyboardDismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4C27F925D7132700C492D7 /* KeyboardDismiss.swift */; };
 		5B641A2024E412C2009DFF24 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B641A1F24E412C2009DFF24 /* AppDelegate.swift */; };
 		5B641A2224E412C2009DFF24 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B641A2124E412C2009DFF24 /* SceneDelegate.swift */; };
 		5B641A2924E412C4009DFF24 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B641A2824E412C4009DFF24 /* Assets.xcassets */; };
 		5B641A2C24E412C4009DFF24 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B641A2A24E412C4009DFF24 /* LaunchScreen.storyboard */; };
 		5B641A3724E412C4009DFF24 /* GrimorioTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B641A3624E412C4009DFF24 /* GrimorioTests.swift */; };
 		5B641A4224E412C4009DFF24 /* GrimorioUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B641A4124E412C4009DFF24 /* GrimorioUITests.swift */; };
-		5B641A5024E415FA009DFF24 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B641A4F24E415FA009DFF24 /* TabBarController.swift */; };
+		5B641A5024E415FA009DFF24 /* SpellsTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B641A4F24E415FA009DFF24 /* SpellsTabBarController.swift */; };
 		5B641A5224E4166D009DFF24 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B641A5124E4166D009DFF24 /* TableViewController.swift */; };
 		5BCCBF3C24E4170A008EB2F0 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCCBF3B24E4170A008EB2F0 /* TableViewCell.swift */; };
 		5BCCBF3E24E4176C008EB2F0 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCCBF3D24E4176C008EB2F0 /* FavoritesViewController.swift */; };
@@ -58,6 +59,7 @@
 /* Begin PBXFileReference section */
 		5B4C27DE25D6A15300C492D7 /* UIView+Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Loading.swift"; sourceTree = "<group>"; };
 		5B4C27E325D6A18000C492D7 /* LoadingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingProtocol.swift; sourceTree = "<group>"; };
+		5B4C27F925D7132700C492D7 /* KeyboardDismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardDismiss.swift; sourceTree = "<group>"; };
 		5B641A1C24E412C2009DFF24 /* Grimorio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grimorio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B641A1F24E412C2009DFF24 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5B641A2124E412C2009DFF24 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -70,7 +72,7 @@
 		5B641A3D24E412C4009DFF24 /* GrimorioUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrimorioUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B641A4124E412C4009DFF24 /* GrimorioUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrimorioUITests.swift; sourceTree = "<group>"; };
 		5B641A4324E412C4009DFF24 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5B641A4F24E415FA009DFF24 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		5B641A4F24E415FA009DFF24 /* SpellsTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellsTabBarController.swift; sourceTree = "<group>"; };
 		5B641A5124E4166D009DFF24 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		5BCCBF3B24E4170A008EB2F0 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		5BCCBF3D24E4176C008EB2F0 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
@@ -181,7 +183,7 @@
 			children = (
 				5BCCBF3D24E4176C008EB2F0 /* FavoritesViewController.swift */,
 				5B641A5124E4166D009DFF24 /* TableViewController.swift */,
-				5B641A4F24E415FA009DFF24 /* TabBarController.swift */,
+				5B641A4F24E415FA009DFF24 /* SpellsTabBarController.swift */,
 				5BCCBF9724EAB55D008EB2F0 /* SpellDetailsViewController.swift */,
 			);
 			path = Controller;
@@ -226,6 +228,7 @@
 				5BEF4E1225CC684E003181C0 /* Colors.swift */,
 				5BEF4E1A25CC68E5003181C0 /* imagePlaceholder.swift */,
 				5B4C27DE25D6A15300C492D7 /* UIView+Loading.swift */,
+				5B4C27F925D7132700C492D7 /* KeyboardDismiss.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -391,7 +394,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B641A5024E415FA009DFF24 /* TabBarController.swift in Sources */,
+				5B641A5024E415FA009DFF24 /* SpellsTabBarController.swift in Sources */,
 				5B4C27DF25D6A15300C492D7 /* UIView+Loading.swift in Sources */,
 				5BEF4E2625D2A776003181C0 /* SpellItemPresenter.swift in Sources */,
 				5BCCBF4024E4178D008EB2F0 /* CollectionViewCell.swift in Sources */,
@@ -414,6 +417,7 @@
 				5BCCBF9424E6D0A8008EB2F0 /* ServiceError.swift in Sources */,
 				5BCCBF8D24E6C12D008EB2F0 /* SpellList.swift in Sources */,
 				5B641A2224E412C2009DFF24 /* SceneDelegate.swift in Sources */,
+				5B4C27FA25D7132700C492D7 /* KeyboardDismiss.swift in Sources */,
 				5BCCBF8F24E6C133008EB2F0 /* Spell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -592,7 +596,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = academy.Grimoire;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -611,7 +615,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = academy.Grimoire;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

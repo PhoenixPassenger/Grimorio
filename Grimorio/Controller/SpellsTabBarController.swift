@@ -8,7 +8,8 @@ class TabBarController: UITabBarController {
         self.tabBar.tintColor = .redSalsa
         self.tabBar.unselectedItemTintColor = .mintCream
         self.tabBar.barTintColor = .raisenBlack
-        let tableVC = TableViewController()
+        self.hideKeyboardWhenTappedAround()
+        let tableVC = SpellsTableViewController()
         tableVC.title = ("Grimoire")
         let tableVCItem = UITabBarItem(title: "Grimoire", image: UIImage(systemName: "book.fill"),
                                        selectedImage: UIImage(systemName: "book.fill"))
