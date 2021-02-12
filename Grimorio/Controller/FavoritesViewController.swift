@@ -83,7 +83,7 @@ extension FavoritesViewController {
             tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             tableView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 16),
             tableView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -16),
-            tableView.heightAnchor.constraint(equalTo: self.view.heightAnchor)
+            tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
     }
 

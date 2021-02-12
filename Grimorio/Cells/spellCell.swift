@@ -57,9 +57,10 @@ class SpellCell: UITableViewCell {
         self.layer.backgroundColor = UIColor.redSalsa.cgColor
         self.layer.borderColor = UIColor.redSalsa.cgColor
     }
-    func set(spell: FavoriteSpellCD) {
-        titleLabel.text = spell.name
-        valueText.text = "aaaaaaa eu to maluco"
+    func set(_ data: (String, String), isMultiline: Bool = false) {
+        titleLabel.text = data.0
+        valueText.text = data.1
+        self.isMultiline = isMultiline
     }
 
 }
@@ -73,13 +74,13 @@ extension SpellCell {
 
             titleLabel.leadingAnchor.constraint(equalTo: stack.leadingAnchor, constant: 16),
             titleLabel.topAnchor.constraint(equalTo: stack.topAnchor, constant: 10),
-
+            titleLabel.heightAnchor.constraint(equalToConstant: 25),
             valueText.leadingAnchor.constraint(equalTo: stack.leadingAnchor)
         ])
 
         if isMultiline {
-            valueText.heightAnchor.constraint(equalToConstant: 90).isActive = true
-            valueText.textContainer.maximumNumberOfLines = 10
+            valueText.heightAnchor.constraint(equalToConstant: 180).isActive = true
+            valueText.textContainer.maximumNumberOfLines = 12
         } else {
             valueText.heightAnchor.constraint(equalToConstant: 30).isActive = true
             valueText.textContainer.maximumNumberOfLines = 1

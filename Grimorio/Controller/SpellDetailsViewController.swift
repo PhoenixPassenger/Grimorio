@@ -13,6 +13,7 @@ class SpellDetailsViewController: UIViewController {
     let favoriteSpellPresenter = FavoriteSpellCDPresenter()
     var spellCD: FavoriteSpellCD?
     var spell: SpellList
+    var infoArray : [(String, String)] = []
     init( _ spell: SpellList ) {
         self.spell = spell
         self.spellCD = favoriteSpellPresenter.getSpellByName(spell.name)
@@ -23,17 +24,54 @@ class SpellDetailsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+//    lazy var age: ProfileComponent = {
+//        let view = ProfileComponent(titleText: LocalizedStrings.age, value: "")
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        return view
+//    }()
+//    
     var detailedSpell = Spell().self {
         didSet {
-            self.descLbl.text = detailedSpell.desc[0]
-            self.rangeLbl.text = detailedSpell.range
-            self.levelLbl.text = String(detailedSpell.level!)
-            if let material = detailedSpell.material {
-                self.materialLbl.text = material            }
-            if let higherLevel = detailedSpell.higherLevel {
-                self.higherlevelLbl.text = higherLevel[0]
+            if let lvl = detailedSpell.level {
+                self.infoArray.append(("Level", String(lvl)))
+            }
+            if let school = detailedSpell.school?.name {
+                self.infoArray.append(("School", school))
             }
 
+            if let range = detailedSpell.range {
+                self.infoArray.append(("Range", range))
+            }
+
+            if let components = detailedSpell.components {
+                let fullComponentes: String = components.joined(separator: ",")
+                self.infoArray.append(("Components", fullComponentes))
+            }
+
+            if let ritual = detailedSpell.ritual {
+                self.infoArray.append(("Ritual", String(ritual)))
+            }
+
+            if let concentrarion = detailedSpell.concentration {
+                self.infoArray.append(("Concentrarion", String(concentrarion)))
+            }
+
+            if let castingTime = detailedSpell.castingTime {
+                self.infoArray.append(("Casting Time", castingTime))
+            }
+
+            if let duration = detailedSpell.duration {
+                self.infoArray.append(("Duration", duration))
+            }
+            
+            let desc: String = detailedSpell.desc.joined(separator: "/n")
+            self.infoArray.append(("Description", desc))
+            
+            if let atHigherLevel = detailedSpell.higherLevel {
+                let fullAtHigherLevel: String = atHigherLevel.joined(separator: "/n")
+                self.infoArray.append(("At higher levels", fullAtHigherLevel))
+            }
+            tableView.reloadData()
         }
     }
 
@@ -43,38 +81,13 @@ class SpellDetailsViewController: UIViewController {
 
     lazy var heartButton = UIBarButtonItem(title: "heart", style: .done, target: self, action: #selector(heart(sender:)))
 
-    var nameTitle = UILabel()
-    var nameLbl = UILabel()
-
-    var descTitle = UILabel()
-    var descLbl = UILabel()
-
-    var materialTitle = UILabel()
-    var materialLbl = UILabel()
-
-    var rangeTitle = UILabel()
-    var rangeLbl = UILabel()
-
-    var higherlevelTitle = UILabel()
-    var higherlevelLbl = UILabel()
-
-    var levelTitle = UILabel()
-    var levelLbl = UILabel()
-
     let contentView: UIView = UIView()
 
-    let scrollView: UIScrollView = {
-        let scrollview = UIScrollView()
-        scrollview.translatesAutoresizingMaskIntoConstraints = false
-        scrollview.backgroundColor = .mintCream
-        return scrollview
-    }()
-    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
+        tableView.register(SpellCell.self, forCellReuseIdentifier: "SpellCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         return tableView
@@ -83,8 +96,7 @@ class SpellDetailsViewController: UIViewController {
     override func viewDidLoad() {
         getSpells()
         super.viewDidLoad()
-        nameTitle.text = spell.name
-        self.title = nameTitle.text
+        self.title = self.spell.name
         setupLayout()
         self.view.backgroundColor = .mintCream
         self.navigationItem.largeTitleDisplayMode = .always
@@ -118,19 +130,6 @@ class SpellDetailsViewController: UIViewController {
 }
 
 extension SpellDetailsViewController {
-    func setupTitle(label: UILabel) -> UILabel {
-        label.font = UIFont.boldSystemFont(ofSize: 17)
-        label.textColor = .systemRed
-        return label
-    }
-
-    func setupBody(label: UILabel) -> UILabel {
-        label.font = UIFont.systemFont(ofSize: 17)
-        label.textColor = .black
-        label.numberOfLines = 16
-        return label
-    }
-
     func prepareHeartButton() {
         self.isHearted = self.defaults.bool(forKey: self.spell.name)
         if self.isHearted {
@@ -163,101 +162,8 @@ extension SpellDetailsViewController {
 
     private func setupLayout() {
         prepareHeartButton()
-
-        self.view.addSubview(scrollView)
-
-        scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-        scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
-
-        descTitle = setupTitle(label: descTitle)
-        descTitle.text = "Description : "
-        descLbl = setupBody(label: descLbl)
-
-        rangeTitle = setupTitle(label: rangeTitle)
-        rangeTitle.text = "Range : "
-        rangeLbl = setupBody(label: rangeLbl)
-
-        higherlevelTitle = setupTitle(label: higherlevelTitle)
-        higherlevelTitle.text = "Higher Level : "
-        higherlevelLbl = setupBody(label: higherlevelLbl)
-
-        levelTitle = setupTitle(label: levelTitle)
-        levelTitle.text = "Level : "
-        levelLbl = setupBody(label: levelLbl)
-
-        materialTitle = setupTitle(label: materialTitle)
-        materialTitle.text = "Material : "
-        materialLbl = setupBody(label: materialLbl)
-
-        view.addSubview(nameTitle)
-        view.addSubview(descLbl)
-        let stackview = UIStackView()
-
-        stackview.axis = .vertical
-        stackview.spacing = 10
-        //Aqui
-        stackview.distribution = .fill
-        stackview.translatesAutoresizingMaskIntoConstraints = false
-
-        stackview.addArrangedSubview(descTitle)
-        descTitle.leadingAnchor.constraint(equalTo: stackview.leadingAnchor).isActive = true
-        descTitle.trailingAnchor.constraint(equalTo: stackview.trailingAnchor).isActive = true
-
-        stackview.addArrangedSubview(descLbl)
-        descLbl.leadingAnchor.constraint(equalTo: stackview.leadingAnchor).isActive = true
-        descLbl.trailingAnchor.constraint(equalTo: stackview.trailingAnchor).isActive = true
-
-        stackview.addArrangedSubview(rangeTitle)
-        rangeTitle.leadingAnchor.constraint(equalTo: stackview.leadingAnchor).isActive = true
-        rangeTitle.trailingAnchor.constraint(equalTo: stackview.trailingAnchor).isActive = true
-
-        stackview.addArrangedSubview(rangeLbl)
-        rangeLbl.leadingAnchor.constraint(equalTo: stackview.leadingAnchor).isActive = true
-        rangeLbl.trailingAnchor.constraint(equalTo: stackview.trailingAnchor).isActive = true
-
-        stackview.addArrangedSubview(levelTitle)
-        levelTitle.leadingAnchor.constraint(equalTo: stackview.leadingAnchor).isActive = true
-        levelTitle.trailingAnchor.constraint(equalTo: stackview.trailingAnchor).isActive = true
-
-        stackview.addArrangedSubview(levelLbl)
-        levelLbl.leadingAnchor.constraint(equalTo: stackview.leadingAnchor).isActive = true
-        levelLbl.trailingAnchor.constraint(equalTo: stackview.trailingAnchor).isActive = true
-
-        stackview.addArrangedSubview(materialTitle)
-        materialTitle.leadingAnchor.constraint(equalTo: stackview.leadingAnchor).isActive = true
-        materialTitle.trailingAnchor.constraint(equalTo: stackview.trailingAnchor).isActive = true
-
-        stackview.addArrangedSubview(materialLbl)
-        materialLbl.leadingAnchor.constraint(equalTo: stackview.leadingAnchor).isActive = true
-        materialLbl.trailingAnchor.constraint(equalTo: stackview.trailingAnchor).isActive = true
-
-        stackview.addArrangedSubview(higherlevelTitle)
-        higherlevelTitle.leadingAnchor.constraint(equalTo: stackview.leadingAnchor).isActive = true
-        higherlevelTitle.trailingAnchor.constraint(equalTo: stackview.trailingAnchor).isActive = true
-
-        stackview.addArrangedSubview(higherlevelLbl)
-        higherlevelLbl.leadingAnchor.constraint(equalTo: stackview.leadingAnchor).isActive = true
-        higherlevelLbl.trailingAnchor.constraint(equalTo: stackview.trailingAnchor).isActive = true
-
-        contentView.addSubview(stackview)
-        stackview.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
-        stackview.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        stackview.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
-        stackview.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
-
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(contentView)
-        contentView.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 0).isActive = true
-        contentView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0).isActive = true
-        contentView.rightAnchor.constraint(equalTo: scrollView.rightAnchor, constant: 0).isActive = true
-        contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0).isActive = true
-        contentView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        let heightAnchor = contentView.heightAnchor.constraint(equalTo: view.heightAnchor)
-        heightAnchor.priority = .defaultLow
-        heightAnchor.isActive = true
-
+        setupUI()
+        
        }
 
 }
@@ -268,12 +174,11 @@ extension SpellDetailsViewController: UITableViewDelegate, UITableViewDataSource
             overrideUserInterfaceStyle = .light
         }
         self.view.addSubview(tableView)
-        tableView.rowHeight = 66
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             tableView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 16),
             tableView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -16),
-            tableView.heightAnchor.constraint(equalTo: self.view.heightAnchor)
+            tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
     }
 
@@ -298,19 +203,29 @@ extension SpellDetailsViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return filteredSpells.count
+        return infoArray.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellWrap = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as? TableViewCell
+        let cellWrap = tableView.dequeueReusableCell(withIdentifier: "SpellCell") as? SpellCell
         guard let cell = cellWrap else { fatalError() }
-        cell.set(spell: filteredSpells[indexPath.section])
+        let info = infoArray[indexPath.section]
+        if info.0 == "Description" || info.0 == "At higher levels" {
+            self.tableView.rowHeight = 205
+            cell.set(info, isMultiline: true)
+        } else {
+            self.tableView.rowHeight = 70
+            cell.set(info)
+        }
         return cell
     }
+}
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
-        let dest = SpellDetailsViewController(filteredSpells[indexPath.section])
-        self.navigationController?.pushViewController(dest, animated: true)
+extension String {
+
+    var numberOfLines: Int {
+        print(self.components(separatedBy: ".").count)
+        return self.components(separatedBy: ".").count
     }
+
 }

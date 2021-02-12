@@ -50,7 +50,6 @@ class TableViewController: UIViewController, UISearchBarDelegate {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
-        //tableView.tableFooterView = UIView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         return tableView
@@ -68,7 +67,7 @@ extension TableViewController {
             tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             tableView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 16),
             tableView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -16),
-            tableView.heightAnchor.constraint(equalTo: self.view.heightAnchor)
+            tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
     }
 
